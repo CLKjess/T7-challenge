@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Página de Criptografia</title>
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <img class="logo" src="images/logo.png" alt="" />
+        <div class="left-side">
+            <div class="content">
+                <div class="input-container">
+                    <label for="text-input">Digite seu texto abaixo</label>
+                    <textarea id="inputText"></textarea>
+                </div>
+                <div class="actions">
+                    <div class="note">
+                        <img src="images/exclamation-circle.png" alt="" />
+                        <p>Apenas letras minúsculas e sem acento.</p>
+                    </div>
+                    <div class="buttons">
+                        <button class="encrypt-btn" onclick="criptografar()">Criptografar</button>
+                        <button class="decrypt-btn" onclick="descriptografar()">Descriptografar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <img src="images/boneco.png" alt="Imagem do boneco" class="img-boneco" />
+            <p id="outputText">
+                <span class="output-text-title">Nenhuma mensagem encontrada</span>
+                <span class="output-text-subtitle"
+                    >Digite um texto que você deseja criptografar ou descriptografar.</span
+                >
+            </p>
+        </div>
+        <script>
+            const chaves = {
+                e: 'enter',
+                i: 'imes',
+                a: 'ai',
+                o: 'ober',
+                u: 'ufat',
+            };
+
+            const inversoChaves = Object.fromEntries(Object.entries(chaves).map(([k, v]) => [v, k]));
+
+            function criptografar() {
+                let texto = document.getElementById('inputText').value;
+                let textoCriptografado = texto.replace(/[eioua]/g, match => chaves[match]);
+                document.getElementById('outputText').innerHTML = textoCriptografado;
+            }
+
+            function descriptografar() {
+                let texto = document.getElementById('inputText').value;
+                let textoDescriptografado = texto.replace(/enter|imes|ai|ober|ufat/g, match => inversoChaves[match]);
+                document.getElementById('outputText').innerHTML = textoDescriptografado;
+            }
+
+            function copiarTexto() {
+                let texto = document.getElementById('outputText');
+                texto.select();
+                document.execCommand('copy');
+                alert('Texto copiado para a área de transferência!');
+            }
+        </script>
+    </body>
+</html>
